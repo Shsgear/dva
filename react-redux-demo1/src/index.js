@@ -292,7 +292,7 @@ class Index extends Component {
     return (
       <div className="index">
         <LikeButton></LikeButton>
-        {users.map((user) => <List user={user} />)}
+        {users.map((user, i) => <List user={user} key={i} />)}
       </div>
     )
   }

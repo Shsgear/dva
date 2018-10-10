@@ -1,0 +1,6 @@
+cache: yarn
+install:
+- yarn install
+
+script:
+- npm test

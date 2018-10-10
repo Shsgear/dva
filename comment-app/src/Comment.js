@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Proptypes from 'prop-types';
 
 class Comment extends Component {
-  static defaultProps = {
-    name: '',
-    msg: ''
+  static propTypes = {
+    comment: Proptypes.object.isRequired,
   }
+
   
   render() {
     const {msg, name} = this.props.comment;

@@ -33,9 +33,17 @@ class CommentInput extends Component {
       msg: '',
     })
   }
-  
+  _loadUserName() {
+    const username = localStorage.getItem('username');
+    if (username) {
+      this.setState({
+        name: username
+      })
+    }
+  }
   componentDidMount() {
     this.input.focus();
+    this._loadUserName();
   }
 
   render() {

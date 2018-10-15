@@ -16,12 +16,20 @@ class CommentApp extends Component {
           msg: 'Bitcoin',
         },
       ],
+      currentUserName: '',
     }
   }
   handleSubmitComment(comment) {
     this.setState({
       comments: [comment, ...this.state.comments],
-    })
+      currentUserName: comment.name
+    }, () => {
+      this._saveUsername(this.state.currentUserName);
+    });
+    
+  }
+  _saveUsername (username) {
+    localStorage.setItem('username', username)
   }
 
   render() {

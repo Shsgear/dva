@@ -24,14 +24,26 @@ class CommentInput extends Component {
     })
   }
 
+  _saveUserName(name) {
+    window.localStorage.setItem('name', name);
+  }
+  _loadUsername () {
+    const name = localStorage.getItem('name')
+    if (name) {
+      this.setState({ name })
+    }
+  }
+
   handleSubmit() {
+    const { name, msg } = this.state;
     if (this.props.onSubmit) {
-      const { name, msg } = this.state;
       this.props.onSubmit({ name, msg });
     }
     this.setState({
+      name,
       msg: '',
     })
+    this._saveUserName(name);
   }
   _loadUserName() {
     const username = localStorage.getItem('username');

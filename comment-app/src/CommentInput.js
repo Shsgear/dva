@@ -10,6 +10,7 @@ class CommentInput extends Component {
     this.state = {
       name: '',
       msg: '',
+      createTime: '',
     }
   }
 
@@ -37,7 +38,7 @@ class CommentInput extends Component {
   handleSubmit() {
     const { name, msg } = this.state;
     if (this.props.onSubmit) {
-      this.props.onSubmit({ name, msg });
+      this.props.onSubmit({ name, msg, createTime: +new Date() });
     }
     this.setState({
       name,

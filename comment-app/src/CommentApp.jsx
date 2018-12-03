@@ -6,37 +6,50 @@ class CommentApp extends Component {
   constructor() {
     super();
     this.state = {
-      comments: [
-        {
-          name: 'ETH',
-          msg: 'Ethereum',
-        },
-        {
-          name: 'BTC',
-          msg: 'Bitcoin',
-        },
-      ],
+      comments: [],
       currentUserName: '',
     }
   }
+  componentWillMount() {
+    this._loadComments();
+  }
   handleSubmitComment(comment) {
+    console.log('comment', comment);
     this.setState({
       comments: [comment, ...this.state.comments],
       currentUserName: comment.name
     }, () => {
       this._saveUsername(this.state.currentUserName);
+      this._saveComments(this.state.comments);
     });
     
+  }
+  _loadComments() {
+    let comments = localStorage.getItem('comments');
+    // console.log(comments);
+    if (comments) {
+      comments = JSON.parse(comments);
+      this.setState({ comments });
+    }
+  }
+  _saveComments(comments) {
+    localStorage.setItem('comments', JSON.stringify(comments))
   }
   _saveUsername (username) {
     localStorage.setItem('username', username)
   }
-
+  handleDeleteComment(index) {
+    console.log(index);
+    const { comments } = this.state;
+    comments.splice(index, 1);
+    this.setState({ comments });
+    this._saveComments(comments);
+  }
   render() {
     return (
       <div className="wrapper">
         <CommentInput onSubmit={this.handleSubmitComment.bind(this)}></CommentInput>
-        <CommentList comments={this.state.comments}></CommentList>
+        <CommentList comments={this.state.comments} onDeleteComment={this.handleDeleteComment.bind(this)}></CommentList>
         <Post></Post>
         <Ref></Ref>
       </div>
@@ -46,7 +59,7 @@ class CommentApp extends Component {
 function getPostData() {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      res(12);
+      res('response from server');
     }, 1000)
   })
 }
